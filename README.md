@@ -27,10 +27,15 @@ En nuestro caso, hemos cargado el conjunto de datos de TITANIC. Y obsevamos los 
 En nuestro caso, nos proponemos la limpieza y análisis de datos datos bajo el objetivo de predecir los pasajeros supervivientes del desastre del Titanic. Por esta razón, enfocamos esta segunda tarea con el objetivo de aplicar un algorítmo predictivo como lo es RANDOMFOREST. 
 Como sabemos que el uso de RANDOMFOREST nos obliga a trabajar con variables numéricas, en este apartado debemos de seleccionar solamente, aquellas variables numéricas o potencialmente numéricas. En concreto, todas las 12 variables son numéricas excepto: "Name", "Sex", "Ticket", "Cabin" y "Embarked". Definitivamente, la variable del nombre, no nos aporta valor para el modelo predictivo y por lo tanto, la descartamos, pero todas las demás variables, si que es interesante tenerlas en consideración para generar el modelo predictivo y por lo tanto, seleccionamos todas las variables tanto numéricas como categóricas (luego se pueden convertir) y descartamos de la selección la variable "Name".
 
+
 ## 3. Limpieza de los datos
+
 ### 3.1 ¿Los datos contienen ceros o elementos vacíos? ¿Cómo gestionarías cada uno de estos casos?
+Si, en este primer análisis descriptivo detectamos una variable con valores vacíos (NA´s). En concreto, se trata de la variable "Age" con un total de 177 observaciones vacías. 
+Esto, comporta un problema ya que si el objetivo es limpiar los datos para que se pueda aplicar el algorítmo predictivo RANDOMFOREST, obligatoriamente necesitamos disponer de todos los campos completos, es decir, que no haya ningún elemento vacío.
+Ante esta situación, procedemos a la eliminación de todos los registros con valores vacíos. De este modo, de las iniciales 891 observaciones, obtenemos un total de 714 observaciones
 
-
+### 3.2. Identificación y tratamiento de valores extremos
 
 
 
