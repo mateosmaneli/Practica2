@@ -25,7 +25,16 @@ En nuestro caso, hemos cargado el conjunto de datos de TITANIC. Y obsevamos los 
 
 ## 2. Integración y selección de los datos de interés a analizar
 En nuestro caso, nos proponemos la limpieza y análisis de datos datos bajo el objetivo de predecir los pasajeros supervivientes del desastre del Titanic. Por esta razón, enfocamos esta segunda tarea con el objetivo de aplicar un algorítmo predictivo como lo es RANDOMFOREST. 
-Como sabemos que el uso de RANDOMFOREST nos obliga a trabajar con variables numéricas, en este apartado debemos de seleccionar solamente, aquellas variables numéricas o potencialmente numéricas. En concreto, todas las 12 variables son numéricas excepto: "Name", "Sex", "Ticket", "Cabin" y "Embarked". Definitivamente, la variable del nombre, no nos aporta valor para el modelo predictivo y por lo tanto, la descartamos, pero todas las demás variables, si que es interesante tenerlas en consideración para generar el modelo predictivo y por lo tanto, seleccionamos todas las variables tanto numéricas como categóricas (luego se pueden convertir) y descartamos de la selección la variable "Name".
+Como sabemos que el uso de RANDOMFOREST nos obliga a trabajar con variables numéricas, en este apartado debemos de seleccionar solamente, aquellas variables numéricas o potencialmente numéricas. En concreto, "Name", "Sex", "Ticket", "Cabin" y "Embarked" son variables categóricas es decir, no nos aporta valor para el modelo predictivo y por lo tanto, las descartamos a excepción de la variable "Sex" que podría convertirse en una variable númerica cambiando los valores "male" por un "1" y "female" por un "2". Todas las demás variables, si que es interesante tenerlas en consideración para generar el modelo predictivo. De las 12 variables, seleccionamos 8:
+
+- "PassengerId"
+- "Survived"
+- "Pclass"
+- "Sex"
+- "Age"
+- "SibSp"
+- "Parch"
+- "Fare"
 
 
 ## 3. Limpieza de los datos
@@ -36,6 +45,7 @@ Esto, comporta un problema ya que si el objetivo es limpiar los datos para que s
 Ante esta situación, procedemos a la eliminación de todos los registros con valores vacíos. De este modo, de las iniciales 891 observaciones, obtenemos un total de 714 observaciones
 
 ### 3.2. Identificación y tratamiento de valores extremos
-
+En este apartado, seguimos el proceso de acondicionamiento de los datos convirtiendo aquellas variables categóricas en variables numéricas. En concreto, se trata de la variable "Sex", convirtiendo estas variable en numérica, nos permitirá aplicar correctamente el algorítmo predictivo, así como, detectar en el siguiente paso, posibles valores extremos. Lo realizamos mediante el reemplazo de los valores "male" por un "1" y "female" por un "2".
+Para analizar la presencia de posibles valores extremos (outliers), realizamos un diagrama de caja (boxplot) para cada una de las variables. En este análisis, se detectan outlers en las variables: "Age", "SibSp", "Parch" y "Fare". Para que la aplicación del algoritmo predictivo sea más eficiente, se deben de eliminar los valores extremos y por lo tanto, acondicionamos estas variables, eliminando sus outlers. 
 
 
