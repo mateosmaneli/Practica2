@@ -46,6 +46,11 @@ Ante esta situación, procedemos a la eliminación de todos los registros con va
 
 ### 3.2. Identificación y tratamiento de valores extremos
 En este apartado, seguimos el proceso de acondicionamiento de los datos convirtiendo aquellas variables categóricas en variables numéricas. En concreto, se trata de la variable "Sex", convirtiendo estas variable en numérica, nos permitirá aplicar correctamente el algorítmo predictivo, así como, detectar en el siguiente paso, posibles valores extremos. Lo realizamos mediante el reemplazo de los valores "male" por un "1" y "female" por un "2".
-Para analizar la presencia de posibles valores extremos (outliers), realizamos un diagrama de caja (boxplot) para cada una de las variables. En este análisis, se detectan outlers en las variables: "Age", "SibSp", "Parch" y "Fare". Para que la aplicación del algoritmo predictivo sea más eficiente, se deben de eliminar los valores extremos y por lo tanto, acondicionamos estas variables, eliminando sus outlers. 
+Para analizar la presencia de posibles valores extremos (outliers), realizamos un diagrama de caja (boxplot) para cada una de las variables. En este análisis, se detectan outlers en las variables: "Age", "SibSp", "Parch" y "Fare". Para que la aplicación del algoritmo predictivo sea más eficiente, se deben de eliminar los valores extremos y por lo tanto, acondicionamos estas variables, eliminando sus outlers mediante los boxplots.
+
+## 4. Análisis de los datos
+
+### 4.1 Selección de los grupos de datos que se quieren analizar/comparar
+Una vez se han extraido los outlers, agrupamos todas las variables obtenidas en un mismo conjunto de datos del que posteriormente, trabajaremos como datos finales con los que aplicar el algoritmo predictivo y sus análisis previos. 
 
 
