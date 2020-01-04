@@ -52,5 +52,8 @@ Para analizar la presencia de posibles valores extremos (outliers), realizamos u
 
 ### 4.1 Selección de los grupos de datos que se quieren analizar/comparar
 Una vez se han extraido los outlers, agrupamos todas las variables obtenidas en un mismo conjunto de datos del que posteriormente, trabajaremos como datos finales con los que aplicar el algoritmo predictivo y sus análisis previos. 
+El resultado de la limpieza es:
 
+- 566 observaciones
+- 8 variables (PassengerId, Survived, Pclass, Sex, Age, SibSp, Parch y Fare)
 
