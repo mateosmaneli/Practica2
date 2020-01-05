@@ -73,3 +73,29 @@ Seguimos con la segunda aplicación de prueba estadística generando un modelo d
 - "Sex": El hecho de ser hombre, ofrece un 1,59 más de probabilidades de sobrevivir en el Titanic.
 - "Age": Cada ano agregado a la edad del pasajero, se obtiene un 0,9 de probabilidades de sobrevivir.
 - "Fare": Los pasajeros que compran un billete con tarifa alta, obtienen un 1,003 de probabilidades más altas de sobrevivir en el Titanic. 
+
+HIPÓTESIS PREDICTIVA
+Con los dos anteriores análisis, generemos una hipótesis sobre si es cierto o no que dependiendo del perfil de cada pasajero, hay más probabilidades de sobrevivir. Para validar esta hipótesis, generamos una prueba real de predicción con el modelo de regresión logística anterior. Lo realizamos mediante la creación de 2 perfiles de pasajeros nuevos: uno con perfil de "no-sobreviviente" y el otro, con perfil de "sobreviviente". Tal y como hemos visto en el apartado anterior, los resultados indican que si eres una mujer pobre de clase baja con edad baja, tienes más probabilidades de morir en el Titanic. en cambio, si eres un hombre de clase alta con edad adulta, tienes más posibilidades de sobrevivir en el Titanic. Para comprovarlo, realizamos la predicción para estos dos perfiles creando datos nuevos:
+
+"NO-SOBREVIVE"
+- PassengerId = 1001
+- SibSp = 1
+- Parch = 0
+- Pclass = 1
+- Sex = 2
+- Age = 16
+- Fare = 7
+
+"SOBREVIVE"
+- PassengerId = 1002
+- SibSp = 1
+- Parch = 1
+- Pclass = 3
+- Sex = 1
+- Age = 36
+- Fare = 37
+
+A continuación, generamos la predicción mediante el modelo logístico creado anteriormente y obtenemos los siguiente resultados:
+
+- Perfil "NO-SOBREVIVE" = 92,165% de posibilidades de morir en el Titanic
+- Perfil "SOBREVIVE" = 16,95% de posibilidades de morir en el Titanic
