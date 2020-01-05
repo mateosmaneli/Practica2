@@ -1,0 +1,263 @@
+---
+title: "Práctica 2"
+author: "Manel Mateos Canal"
+date: "28 de diciembre de 2019"
+output: html_document
+---
+
+******
+# 1 Descripcion del dataset
+******
+### Realizamos un analisis descriptivo de los datos.
+
+```{r,eval=TRUE,echo=TRUE}
+# Aplicamos la funcion "read.csv" al archivo obtenido, renombrandolo como "datos":
+datos_titanic <-"train_titanic.csv"
+datos<-read.csv( datos_titanic, sep=",")
+
+# Utilizamos la funcion "str" y "summary" para visualizar la descripcion de los datos:
+str(datos)
+summary(datos)
+```
+
+
+******
+# 2 Integracion y selección de los datos de interes a analizar
+******
+### Seleccionamos todas las variables a excepcion de la variable "Name" ya que no nos aporta valor para el modelo predictivo y por lo tanto, la descartamos.
+
+```{r,eval=TRUE,echo=TRUE}
+# Aplicamos la funcion "data.frame" para crear un nuevo conjunto de datos con todas las variables seleccionadas y lo renombramos como "datos_seleccion":
+
+datos_seleccion <-data.frame(datos$PassengerId, datos$Survived, datos$Pclass, datos$Sex, datos$Age, datos$SibSp, datos$Parch, datos$Fare)
+
+# Visualizamos el resultado
+str(datos_seleccion)
+```
+
+******
+# 3 Limpieza de los datos
+******
+
+## 3.1 Eliminar NA's
+### Omitimos los valores vacios para presentar una estructura de datos completa
+```{r,eval=TRUE,echo=TRUE}
+# Aplicamos la funcion "na.omit" para eliminar los valores vacios:
+datos_sin_vacios <-na.omit(datos_seleccion)
+
+# Visualizamos el resultado
+summary(datos_sin_vacios)
+```
+
+## 3.2. Identificacion y tratamiento de valores extremos
+### Convertimos la variable categorica en variable numerica: "Sex"
+```{r,eval=TRUE,echo=TRUE}
+# Ordenamos la conversion de "male" igual a "1" y "female" igual a "2" para convertir la variable "Sex" en numerica:
+sexType <- c(female = 2, male = 1)
+datos_sin_vacios$datos.Sex <- sexType[datos_sin_vacios$datos.Sex]
+#visualizamos los resultados
+summary(datos_sin_vacios$datos.Sex)
+```
+
+### Realizamos un analisis de diagrama de cajas para cada una de las variables con el fin de detectar y posteriormente eliminar, todos los valores extremos (outlers)
+```{r,eval=TRUE,echo=TRUE}
+# Realizamos un diagrama de cajas para cada una de las variables del conjunto de datos:
+boxplot( datos_sin_vacios$datos.PassengerId, main="PassengerId" )
+boxplot( datos_sin_vacios$datos.Survived, main="Survived" )
+boxplot( datos_sin_vacios$datos.Pclass, main="Pclass" )
+boxplot( datos_sin_vacios$datos.Sex, main="Sex" )
+boxplot( datos_sin_vacios$datos.Age, main="Age" )
+boxplot( datos_sin_vacios$datos.SibSp, main="SibSp" )
+boxplot( datos_sin_vacios$datos.Parch, main="Parch" )
+boxplot( datos_sin_vacios$datos.Fare, main="Fare" )
+```
+### Eliminamos los valores extremos de las variables: "Age", "SibSp", "Parch" y "Fare"
+```{r,eval=TRUE,echo=TRUE}
+#Marcamos los outlers de cada variable:
+values_age <- boxplot.stats(datos_sin_vacios$datos.Age)$out
+values_SibSp <- boxplot.stats(datos_sin_vacios$datos.SibSp)$out
+values_Parch <- boxplot.stats(datos_sin_vacios$datos.Parch)$out
+values_Fare <- boxplot.stats(datos_sin_vacios$datos.Fare)$out
+
+#Valores extremos y sus posiciones:
+cat("Valores extremos en Age:", toString(values_age), "\n" )
+cat("Valores extremos en SibSp:", toString(values_SibSp), "\n" )
+cat("Valores extremos en Parch:", toString(values_Parch), "\n" )
+cat("Valores extremos en Fare:", toString(values_Fare), "\n" )
+
+#Seleccionamos los valores extremos de cada variable
+idx_age <- which( datos_sin_vacios$datos.Age %in% values_age)
+idx_SibSp <- which( datos_sin_vacios$datos.SibSp %in% values_SibSp)
+idx_Parch <- which( datos_sin_vacios$datos.Parch %in% values_Parch)
+idx_Fare <- which( datos_sin_vacios$datos.Fare %in% values_Fare)
+
+#Eliminamos los registros que contienen los valores extremos selecionados:
+datos_sin_outlers_age <- datos_sin_vacios[ -idx_age, ]
+datos_sin_outlers_SibSp <- datos_sin_vacios[ -idx_SibSp, ]
+datos_sin_outlers_Parch <- datos_sin_vacios[ -idx_Parch, ]
+datos_sin_outlers_Fare <- datos_sin_vacios[ -idx_Fare, ]
+
+#Boxplot final sin los outlers:
+boxplot( datos_sin_outlers_age$datos.Age, main="Age despues de eliminar outliers" )
+boxplot( datos_sin_outlers_SibSp$datos.SibSp, main="SibSp despues de eliminar outliers" )
+boxplot( datos_sin_outlers_Fare$datos.Fare, main="Fare despues de eliminar outliers" )
+boxplot( datos_sin_outlers_Parch$datos.Parch, main="Parch despues de eliminar outliers" )
+
+#Quitamos los outlers del dataframe de origen
+datos_sin_vacios <- datos_sin_vacios[-which(datos_sin_vacios$datos.Age %in% values_age),]
+datos_sin_vacios <- datos_sin_vacios[-which(datos_sin_vacios$datos.SibSp %in% values_SibSp),]
+datos_sin_vacios <- datos_sin_vacios[-which(datos_sin_vacios$datos.Parch %in% values_Parch),]
+datos_sin_vacios <- datos_sin_vacios[-which(datos_sin_vacios$datos.Fare %in% values_Fare),]
+```
+
+******
+# 4 Analisis de los datos
+******
+### 4.1 Selección de los grupos de datos que se quieren analizar/comparar
+### Creamos un dataframe con todos los datos finales limpiados:
+```{r,eval=TRUE,echo=TRUE}
+#Aplicamos la funcion "data.frame" para agrupar todas las variables finales:
+datos_limpios <-data.frame(datos_sin_vacios$datos.PassengerId, datos_sin_vacios$datos.Survived, datos_sin_vacios$datos.Pclass, datos_sin_vacios$datos.Sex, datos_sin_vacios$datos.Age, datos_sin_vacios$datos.SibSp, datos_sin_vacios$datos.Parch, datos_sin_vacios$datos.Fare)
+
+# Visualizamos los resultados
+str(datos_limpios)
+```
+
+### 4.2 Comprobacion de la normalidad y homogeneidad de la varianza
+Como sabemos que las muestras a comparar proceden de poblaciones que siguen una distribución normal, utilizamos el F-test para determinar la normalidad y homogeniedad.
+Primero utilizamos "shapiro.test" para comprovar la normalidad de cada variable.
+```{r,eval=TRUE,echo=TRUE}
+# Aplicamos la funcion "shapiro.test" para determinar si cada variable sigue una distribucion normal:
+shapiro.test(datos_limpios$datos_sin_vacios.datos.PassengerId)
+shapiro.test(datos_limpios$datos_sin_vacios.datos.Survived)
+shapiro.test(datos_limpios$datos_sin_vacios.datos.Pclass)
+shapiro.test(datos_limpios$datos_sin_vacios.datos.Sex)
+shapiro.test(datos_limpios$datos_sin_vacios.datos.Age)
+shapiro.test(datos_limpios$datos_sin_vacios.datos.SibSp)
+shapiro.test(datos_limpios$datos_sin_vacios.datos.Parch)
+shapiro.test(datos_limpios$datos_sin_vacios.datos.Fare)
+```
+En todos los casos, p > 0.05 y por lo tanto, hay normalidad en todas las variables.
+
+Luego, aplicamos la funcion "Ftest" para determinar si hay homogeneidad entre las variables y la variable predictiva: "Survived".
+```{r,eval=TRUE,echo=TRUE}
+# Aplicamos la funcion "Ftest" para determinar si hay homogeneidad:
+Ftest_PassengerId <- var.test(datos_limpios$datos_sin_vacios.datos.PassengerId, datos_limpios$datos_sin_vacios.datos.Survived) ; Ftest_PassengerId
+
+Ftest_Pclass <- var.test(datos_limpios$datos_sin_vacios.datos.Pclass, datos_limpios$datos_sin_vacios.datos.Survived) ; Ftest_Pclass
+
+Ftest_Sex <- var.test(datos_limpios$datos_sin_vacios.datos.Sex, datos_limpios$datos_sin_vacios.datos.Survived) ; Ftest_Sex
+
+Ftest_Age <- var.test(datos_limpios$datos_sin_vacios.datos.Age, datos_limpios$datos_sin_vacios.datos.Survived) ; Ftest_Age
+
+Ftest_SibSp <- var.test(datos_limpios$datos_sin_vacios.datos.SibSp, datos_limpios$datos_sin_vacios.datos.Survived) ; Ftest_SibSp
+
+Ftest_Parch <- var.test(datos_limpios$datos_sin_vacios.datos.Parch, datos_limpios$datos_sin_vacios.datos.Survived) ; Ftest_Parch
+
+Ftest_Fare <- var.test(datos_limpios$datos_sin_vacios.datos.Fare, datos_limpios$datos_sin_vacios.datos.Survived) ; Ftest_Fare
+```
+Todos los p-values son inferiiores a 0,05 y por lo tanto, podemops concluir que no hay homogeneidad entre las varianza de las variables
+
+
+### 4.3 Aplicación de pruebas estadísticas
+
+Iniciamos una primera aplicacion de prueba estadistica generando un modelo de regresion multiple con la variable predictiva "Survived".
+
+```{r,eval=TRUE,echo=TRUE}
+# Aplicamos la regresion lineal multiple con la variable predictiva:
+regresion_multiple <- lm(datos_sin_vacios.datos.Survived ~ datos_sin_vacios.datos.PassengerId + datos_sin_vacios.datos.Pclass + datos_sin_vacios.datos.Sex + datos_sin_vacios.datos.Age + datos_sin_vacios.datos.SibSp + datos_sin_vacios.datos.Parch + datos_sin_vacios.datos.Fare, data = datos_limpios)
+
+# Visualizamos el resultado con la funcion "summary" aplicada al modelo anterior:
+summary(regresion_multiple)
+```
+Obtenemos un resultado de un R2-ajustado del 0,3709, es decir, una proporcion de variabilidad de los datos muy mal explicada por el modelo de regresion, es decir, es capaz de explicar solo el 37,09% de la variabilidad observada en la relacion entre los sobrevivientes del Titanic y todos los datos seleccionados. La unica particularidad que observamos, es que las variables "Pclass", "Sex" y "Age" son muy significativas para el modelo de prediccion. 
+
+
+Seguimos con la segunda aplicacion de prueba estadistica generando un modelo de regresion logistica con la variable predictiva "Survived".
+
+```{r,eval=TRUE,echo=TRUE}
+# Ajustamos el modelo logistico con la funcion "glm" con la variable predictiva:
+modelo_logistico <- glm(datos_sin_vacios.datos.Survived ~ datos_sin_vacios.datos.PassengerId +  datos_sin_vacios.datos.SibSp + datos_sin_vacios.datos.Parch + datos_sin_vacios.datos.Pclass + datos_sin_vacios.datos.Sex + datos_sin_vacios.datos.Age + datos_sin_vacios.datos.Fare, data = datos_limpios)
+
+# Visualizamos los resultados:
+summary(modelo_logistico)
+
+exp( modelo_logistico$coefficients[4:8])
+```
+Se puede observar en los resultados que los tres factores: "Pclass", "Sex" y "Age" siguen teniendo una influencia significativa, pero ademas, se le agrega cierta significacion a la variable "Fare"(0.04579) ya que su p-value es inferior a 0,05. Si calculamos los odds asociados a estas variables explicativas obtenemos que:
+
+- "Parch": Dependiendo del numero de familiares que viajen en el Titanic, se obtiene un 1,054 mas de probabilidades de sobrevivir en comparacion con los que viajan sin familiares.
+- "Pclass": Cuando mas alta es la clase en la que viaja un pasajero, se obtiene un 0,86 mas de probabilidades de sobrevivir en comparacion con los que viajan en clase baja.
+- "Sex": El hecho de ser hombre, ofrece un 1,59 más de probabilidades de sobrevivir en el Titanic.
+- "Age": Cada ano agregado a la edad del pasajero, se obtiene un 0,9 de probabilidades de sobrevivir.
+- "Fare": Los pasajeros que compran un billete con tarifa alta, obtienen un 1,003 de probabilidades mas altas de sobrevivir en el Titanic. 
+
+Por ultimo, generemos una prediccion con dos perfiles de pasajeros: "NO-SOBREVIVE" y "SOBREVIVE", dependiendo de los resultados obtenidos en el anterior modelo logistico, podemos definir cada uno de stos perfiles creando datos ajustados a los resultados anteriores.
+```{r,eval=TRUE,echo=TRUE}
+# Primero, generamos un conjunto de datos con los valores de perfil "NO-SOBREVIVE":
+datos_sin_vacios.datos.PassengerId <- as.numeric('1001') # El num de pasajero no influye
+datos_sin_vacios.datos.SibSp <- as.numeric('1') # si tiene hermanos a bordo no influye
+datos_sin_vacios.datos.Parch <- as.numeric('0') # No tiene padres/hijos que viajen con el
+datos_sin_vacios.datos.Pclass <- as.numeric('1') # Clase baja
+datos_sin_vacios.datos.Sex <- as.numeric('2') # Es mujer
+datos_sin_vacios.datos.Age <- as.numeric('16') # Es joven
+datos_sin_vacios.datos.Fare <- as.numeric('7') # Ha pagado un billete barato
+
+# generamos el nuevo dataframe con el perfil "NO-SOBREVIVE":
+no_sobrevive_data <- data.frame(datos_sin_vacios.datos.PassengerId, datos_sin_vacios.datos.SibSp, datos_sin_vacios.datos.Parch, datos_sin_vacios.datos.Pclass, datos_sin_vacios.datos.Sex, datos_sin_vacios.datos.Age, datos_sin_vacios.datos.Fare)
+
+# Visualizamos los resultados:
+str(no_sobrevive_data)
+```
+
+Luego, aplicamos el modelo logistico creado anterioremente con los datos "NO-SOBREVIVE" generados y visualizamos su predicción sobre el porcentaje de riesgo de que muera en el Titanic:
+```{r,eval=TRUE,echo=TRUE}
+# Aplicamos la prediccion con la funcion "predict" en los datos generamos en el anterior punto y bajo el modelo de regresion lineal multiple creado en apartado anterior:
+prediccion_no_sobrevive <- predict(modelo_logistico, no_sobrevive_data, type = "response")
+
+# Visualizamos los resultados:
+head(prediccion_no_sobrevive)
+```
+Este perfil obtiene un 92,165% de posibilidades de morir en el Titanic
+
+Ahora generamos un perfil con los datos de "SOBREVIVE":
+```{r,eval=TRUE,echo=TRUE}
+# Primero, generamos un conjunto de datos con los valores de perfil "SOBREVIVE":
+datos_sin_vacios.datos.PassengerId <- as.numeric('1002') # El num de pasajero no influye
+datos_sin_vacios.datos.SibSp <- as.numeric('1') # si tiene hermanos a bordo no influye
+datos_sin_vacios.datos.Parch <- as.numeric('1') # Si tiene padres/hijos que viajen con el
+datos_sin_vacios.datos.Pclass <- as.numeric('3') # Clase alta
+datos_sin_vacios.datos.Sex <- as.numeric('1') # Es hombre
+datos_sin_vacios.datos.Age <- as.numeric('36') # Es adulto
+datos_sin_vacios.datos.Fare <- as.numeric('37') # Ha pagado un billete caro
+
+# generamos el nuevo dataframe con el perfil "SOBREVIVE":
+sobrevive_data <- data.frame(datos_sin_vacios.datos.PassengerId, datos_sin_vacios.datos.SibSp, datos_sin_vacios.datos.Parch, datos_sin_vacios.datos.Pclass, datos_sin_vacios.datos.Sex, datos_sin_vacios.datos.Age, datos_sin_vacios.datos.Fare)
+
+# Visualizamos los resultados:
+str(sobrevive_data)
+```
+Luego, aplicamos el modelo logistico creado anterioremente con los datos "SOBREVIVE" generados y visualizamos su predicción sobre el porcentaje de riesgo de que muera en el Titanic:
+```{r,eval=TRUE,echo=TRUE}
+# Aplicamos la prediccion con la funcion "predict" en los datos generamos en el anterior punto y bajo el modelo de regresion lineal multiple creado en apartado anterior:
+prediccion_sobrevive <- predict(modelo_logistico, sobrevive_data, type = "response")
+
+# Visualizamos los resultados:
+head(prediccion_sobrevive)
+```
+Este perfil obtiene un 16,95917% de posibilidades de morir en el Titanic
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
