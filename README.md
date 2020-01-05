@@ -62,4 +62,5 @@ Una vez se ha obtenido el dataframe final con todas las tareas de limpieza compl
 
 ### 4.3 Aplicación de pruebas estadísticas para comparar los grupos de datos. En función de los datos y el objetivo del estudio, aplicar pruebas de contraste de hipótesis, correlaciones, regresiones, etc. Aplicar al menos tres métodos de análisis diferentes.
 
-s
+REGRESIÓN LINEAL MULTIPLE
+Generamos un análisis de regresión lineal multiple en la variable predictiva "Survived" junto con las otras variables. Obtenemos un resultado de un R2-ajustado del 0,3709, es decir, una proporción de variabilidad de los datos muy mal explicada por el modelo de regresión, es decir, es capaz de explicar solo el 37,09% de la variabilidad observada en la relación entre los sobrevivientes del Titanic y todos los datos selecciionados. La única particularidad que observamos, es que las variables "Pclass", "Sex" y "Age" son muy significativas para el modelo de predicción. 
