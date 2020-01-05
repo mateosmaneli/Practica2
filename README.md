@@ -66,4 +66,10 @@ REGRESIÓN LINEAL MULTIPLE
 Generamos un análisis de regresión lineal multiple en la variable predictiva "Survived" junto con las otras variables. Obtenemos un resultado de un R2-ajustado del 0,3709, es decir, una proporción de variabilidad de los datos muy mal explicada por el modelo de regresión, es decir, es capaz de explicar solo el 37,09% de la variabilidad observada en la relación entre los sobrevivientes del Titanic y todos los datos seleccionados. La única particularidad que observamos, es que las variables "Pclass", "Sex" y "Age" son muy significativas para el modelo de predicción. 
 
 REGRESIÓN LOGÍSTICA
-Seguimos con la segunda aplicación de prueba estadística generando un modelo de regresión logística con la variable predictiva "Survived". 
+Seguimos con la segunda aplicación de prueba estadística generando un modelo de regresión logística con la variable predictiva "Survived". Con los resultados obtenidos, se puede observar que los tres factores: "Pclass", "Sex" y "Age" siguen teniendo una influencia significativa, pero además, se le agrega cierta significación a la variable "Fare"(0.04579) ya que su p-value es inferior a 0,05. Si calculamos los odds asociados a estas variables explicativas obtenemos que:
+
+- "Parch": Dependiendo del numero de familiares que viajen en el Titanic, se obtiene un 1,054 mas de probabilidades de sobrevivir en comparación con los que viajan sin familiares.
+- "Pclass": Cuando más alta es la clase en la que viaja un pasajero, se obtiene un 0,86 mas de probabilidades de sobrevivir en comparación con los que viajan en clase baja.
+- "Sex": El hecho de ser hombre, ofrece un 1,59 más de probabilidades de sobrevivir en el Titanic.
+- "Age": Cada ano agregado a la edad del pasajero, se obtiene un 0,9 de probabilidades de sobrevivir.
+- "Fare": Los pasajeros que compran un billete con tarifa alta, obtienen un 1,003 de probabilidades más altas de sobrevivir en el Titanic. 
