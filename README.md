@@ -57,3 +57,8 @@ El resultado de la limpieza es:
 - 566 observaciones
 - 8 variables (PassengerId, Survived, Pclass, Sex, Age, SibSp, Parch y Fare)
 
+### 4.2 Comprobación de la normalidad y homogeneidad de la varianza
+Una vez se ha obtenido el dataframe final con todas las tareas de limpieza completadas, empezamos con el análisis de los datos donde concretamente, analizamos la normalidad y homogeneidad de la varianza. Como sabemos que las muestras a comparar proceden de poblaciones que siguen una distribución normal, utilizamos el F-test, también conocido como contraste de la razón de varianzas, contrasta la hipótesis nula de que dos poblaciones normales tienen la misma varianza. Primero realizamos el análisis test SHAPIRo en el que obtenemos resultados de cada una de las 8 variables y se comprueba que todos tienen En todos los casos, p > 0.05 y por lo tanto, hay normalidad en todas las variables. Luego, aplicamos la función "Ftest" entre todas las variables y la variable predictiva "Survived", de este modo, obtenemos un resultado donde casi todas las comparaciones obtienen un p-value inferior a 0,05 y eso significa que hay homogeniedad entre las varianzas ya que no muestran diferencias significativas, pero las variables "Sex"(p-value = 0.37859) y "SibSp"(p-value = 0.1095) obtienen resultados superiores al nivel de significación y por lo tanto, estas nos indican que no hay diferencias significativas entre las varianzas. 
+
+### 4.3 Aplicación de pruebas estadísticas para comparar los grupos de datos. En función de los datos y el objetivo del estudio, aplicar pruebas de contraste de hipótesis, correlaciones, regresiones, etc. Aplicar al menos tres métodos de análisis diferentes.
+
