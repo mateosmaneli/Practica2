@@ -62,3 +62,4 @@ Una vez se ha obtenido el dataframe final con todas las tareas de limpieza compl
 
 ### 4.3 Aplicación de pruebas estadísticas para comparar los grupos de datos. En función de los datos y el objetivo del estudio, aplicar pruebas de contraste de hipótesis, correlaciones, regresiones, etc. Aplicar al menos tres métodos de análisis diferentes.
 
+s
