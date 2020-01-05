@@ -98,4 +98,9 @@ Con los dos anteriores análisis, generemos una hipótesis sobre si es cierto o 
 A continuación, generamos la predicción mediante el modelo logístico creado anteriormente y obtenemos los siguiente resultados:
 
 - Perfil "NO-SOBREVIVE" = 92,165% de posibilidades de morir en el Titanic
-- Perfil "SOBREVIVE" = 16,95% de posibilidades de morir en el Titanic
+- Perfil "SOBREVIVE" = 16,96% de posibilidades de morir en el Titanic
+
+## 5. Resolución del problema
+Las conclusiones que obtenemos en este ejercicio son que principalmente, la limpieza de datos forma parte del protagosnimo de todas las tareas de explotación de datos. Luego, es importante conocer cómo deben de presentarse las variables para generar una tarea concreta de explotación de datos, como nuestro caso, las tareas de limpieza condicionan la aplicación del modelo algorítmico predictivo, es decir, se debe de conocer bien como se utiliza el modelo predictivo para que antes, acondicionar correctamente todos los datos en las tareas previas de limpieza. Finalmente, obtenemos unas conclusiones concretas para los objetivos propuestos sobre el modelo predictivo de sobrevivencia en el Titanic, en concreto, sabemos que las posibilidades de morir en el Titanic dependen de 5 factores: edad, sexo, clase social, el acompañamiento de padres/hijos pasajeros y el precio pagado por el billete. Si tienes un perfil con clase alta que viajas al Titanic junto con tu familia, siendo un hombre adulto; tienes muchas más probabilidades de sobrevivir que no una persona con un perfil contrario, es decir, si tienes un perfil de pobre, que viaja sola al Titanic siendo mujer muy joven, tienes muchas posibilidades de morir. A modo de curiosidad, podemos afirmar que este modelo predictivo creado esta muy bien alineado con la película ganadora de 9 oscars "TITANIC" donde el protagonista pobre (Leonardo Dicaprio) que viaja sin familia acaba muriendo en la escena final, en cambio, la protagonista (Kate Winslet) rica de clase alta que viaja con su familia, termina sobreviviendo del desastre del Titanic. 
+
+
