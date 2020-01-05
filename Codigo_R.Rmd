@@ -1,5 +1,5 @@
 ---
-title: "Pr醕tica 2"
+title: "Pr谩ctica 2"
 author: "Manel Mateos Canal"
 date: "28 de diciembre de 2019"
 output: html_document
@@ -22,7 +22,7 @@ summary(datos)
 
 
 ******
-# 2 Integracion y selecci髇 de los datos de interes a analizar
+# 2 Integracion y selecci贸n de los datos de interes a analizar
 ******
 ### Seleccionamos todas las variables a excepcion de la variable "Name" ya que no nos aporta valor para el modelo predictivo y por lo tanto, la descartamos.
 
@@ -113,7 +113,7 @@ datos_sin_vacios <- datos_sin_vacios[-which(datos_sin_vacios$datos.Fare %in% val
 ******
 # 4 Analisis de los datos
 ******
-### 4.1 Selecci髇 de los grupos de datos que se quieren analizar/comparar
+### 4.1 Selecci贸n de los grupos de datos que se quieren analizar/comparar
 ### Creamos un dataframe con todos los datos finales limpiados:
 ```{r,eval=TRUE,echo=TRUE}
 #Aplicamos la funcion "data.frame" para agrupar todas las variables finales:
@@ -124,7 +124,7 @@ str(datos_limpios)
 ```
 
 ### 4.2 Comprobacion de la normalidad y homogeneidad de la varianza
-Como sabemos que las muestras a comparar proceden de poblaciones que siguen una distribuci髇 normal, utilizamos el F-test para determinar la normalidad y homogeniedad.
+Como sabemos que las muestras a comparar proceden de poblaciones que siguen una distribuci贸n normal, utilizamos el F-test para determinar la normalidad y homogeniedad.
 Primero utilizamos "shapiro.test" para comprovar la normalidad de cada variable.
 ```{r,eval=TRUE,echo=TRUE}
 # Aplicamos la funcion "shapiro.test" para determinar si cada variable sigue una distribucion normal:
@@ -159,7 +159,7 @@ Ftest_Fare <- var.test(datos_limpios$datos_sin_vacios.datos.Fare, datos_limpios$
 Todos los p-values son inferiiores a 0,05 y por lo tanto, podemops concluir que no hay homogeneidad entre las varianza de las variables
 
 
-### 4.3 Aplicaci髇 de pruebas estad韘ticas
+### 4.3 Aplicaci贸n de pruebas estad铆sticas
 
 Iniciamos una primera aplicacion de prueba estadistica generando un modelo de regresion multiple con la variable predictiva "Survived".
 
@@ -188,7 +188,7 @@ Se puede observar en los resultados que los tres factores: "Pclass", "Sex" y "Ag
 
 - "Parch": Dependiendo del numero de familiares que viajen en el Titanic, se obtiene un 1,054 mas de probabilidades de sobrevivir en comparacion con los que viajan sin familiares.
 - "Pclass": Cuando mas alta es la clase en la que viaja un pasajero, se obtiene un 0,86 mas de probabilidades de sobrevivir en comparacion con los que viajan en clase baja.
-- "Sex": El hecho de ser hombre, ofrece un 1,59 m醩 de probabilidades de sobrevivir en el Titanic.
+- "Sex": El hecho de ser hombre, ofrece un 1,59 m谩s de probabilidades de sobrevivir en el Titanic.
 - "Age": Cada ano agregado a la edad del pasajero, se obtiene un 0,9 de probabilidades de sobrevivir.
 - "Fare": Los pasajeros que compran un billete con tarifa alta, obtienen un 1,003 de probabilidades mas altas de sobrevivir en el Titanic. 
 
@@ -210,7 +210,7 @@ no_sobrevive_data <- data.frame(datos_sin_vacios.datos.PassengerId, datos_sin_va
 str(no_sobrevive_data)
 ```
 
-Luego, aplicamos el modelo logistico creado anterioremente con los datos "NO-SOBREVIVE" generados y visualizamos su predicci髇 sobre el porcentaje de riesgo de que muera en el Titanic:
+Luego, aplicamos el modelo logistico creado anterioremente con los datos "NO-SOBREVIVE" generados y visualizamos su predicci贸n sobre el porcentaje de riesgo de que muera en el Titanic:
 ```{r,eval=TRUE,echo=TRUE}
 # Aplicamos la prediccion con la funcion "predict" en los datos generamos en el anterior punto y bajo el modelo de regresion lineal multiple creado en apartado anterior:
 prediccion_no_sobrevive <- predict(modelo_logistico, no_sobrevive_data, type = "response")
@@ -237,7 +237,7 @@ sobrevive_data <- data.frame(datos_sin_vacios.datos.PassengerId, datos_sin_vacio
 # Visualizamos los resultados:
 str(sobrevive_data)
 ```
-Luego, aplicamos el modelo logistico creado anterioremente con los datos "SOBREVIVE" generados y visualizamos su predicci髇 sobre el porcentaje de riesgo de que muera en el Titanic:
+Luego, aplicamos el modelo logistico creado anterioremente con los datos "SOBREVIVE" generados y visualizamos su predicci贸n sobre el porcentaje de riesgo de que muera en el Titanic:
 ```{r,eval=TRUE,echo=TRUE}
 # Aplicamos la prediccion con la funcion "predict" en los datos generamos en el anterior punto y bajo el modelo de regresion lineal multiple creado en apartado anterior:
 prediccion_sobrevive <- predict(modelo_logistico, sobrevive_data, type = "response")
